@@ -1,17 +1,31 @@
 {
-  "name": "backend",
+  "name": "car-marketplace-backend",
   "version": "1.0.0",
-  "description": "",
+  "description": "Backend du projet plateforme de vente de voitures",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "node",
+    "express",
+    "mongodb",
+    "mongoose",
+    "cars",
+    "marketplace"
+  ],
+  "author": "Ton Nom",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^3.0.3",
     "dotenv": "^17.2.3",
-    "express": "^5.2.1",
-    "mongoose": "^9.0.2"
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^7.5.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
   }
 }

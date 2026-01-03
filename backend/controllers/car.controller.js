@@ -1,15 +1,48 @@
-// le cerveau. son role est décider quoi faire quand une route est appelée.
-const getCars = (req, res) => {
-  res.json({
-    message: "Liste des voitures",
-    cars: []
-  });
+import Car from "../models/Car.js";
+
+export const getAllCars = async (req, res) => {
+  try {
+    const cars = await Car.find();
+    res.json(cars);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };
 
-module.exports = { getCars };
+export const getCarById = async (req, res) => {
+  try {
+    const car = await Car.findById(req.params.id);
+    if (!car) return res.status(404).json({ message: "Car not found" });
+    res.json(car);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
-// Déclare une fonction. 
-// req = requête (infos envoyées par le client), res = réponse (ce qu’on renvoie)
-//On renvoie une réponse JSON
-//Format standard des APIs
-//cars: [] → pour l’instant, tableau vide (Plus tard, ce sera les données MongoDB)
+export const createCar = async (req, res) => {
+  try {
+    const car = new Car(req.body);
+    const savedCar = await car.save();
+    res.status(201).json(savedCar);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+export const updateCar = async (req, res) => {
+  try {
+    const updatedCar = await Car.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    res.json(updatedCar);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+export const deleteCar = async (req, res) => {
+  try {
+    await Car.findByIdAndDelete(req.params.id);
+    res.json({ message: "Car deleted" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};

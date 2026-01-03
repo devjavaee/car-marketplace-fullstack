@@ -1,16 +1,30 @@
-require("dotenv").config();
-const express = require("express");
-const connectDB = require("./config/db");
+// 1️⃣ Imports
+import express from "express";
+import dotenv from "dotenv";
+import connectDB from "./config/db.js";
+import authRoutes from "./routes/auth.routes.js";
+import carRoutes from "./routes/car.routes.js";
 
+// 2️⃣ Config dotenv
+dotenv.config();
+
+// 3️⃣ Initialiser Express
 const app = express();
-const PORT = 5000;
 
+// 4️⃣ Middleware pour parser JSON
+app.use(express.json());
+
+// 5️⃣ Connecter MongoDB
 connectDB();
 
-const carRoutes = require("./routes/car.routes");
+// 6️⃣ Routes
+app.use("/api/auth", authRoutes);
 app.use("/api/cars", carRoutes);
 
+// 7️⃣ Port
+const PORT = process.env.PORT || 5000;
+
+// 8️⃣ Lancer le serveur
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
-console.log("MONGO_URI =", process.env.MONGO_URI);
